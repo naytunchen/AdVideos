@@ -4,9 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.bnmla.advideos.Fragments.AdConfigFragment;
-import com.bnmla.advideos.Fragments.PageFragment;
-import com.bnmla.advideos.Fragments.PlayerConfigFragment;
+import com.bnmla.advideos.Fragments.ConfigFragment;
+import com.bnmla.advideos.Fragments.VideoFragment;
 
 /**
  * Created by nay on 2/26/16.
@@ -23,14 +22,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch(position) {
             case 0:
-                PageFragment pageFragment = new PageFragment();
-                return pageFragment;
+                ConfigFragment configFragment = new ConfigFragment();
+                return configFragment;
             case 1:
-                PlayerConfigFragment playerConfigFragment = new PlayerConfigFragment();
-                return playerConfigFragment;
-            case 2:
-                AdConfigFragment adConfigFragment = new AdConfigFragment();
-                return adConfigFragment;
+                VideoFragment videoFragment = new VideoFragment();
+                return videoFragment;
             default:
                 return null;
         }
