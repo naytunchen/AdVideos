@@ -2,6 +2,8 @@ package com.bnmla.advideos.Utilities;
 
 import android.util.Log;
 
+import com.bnmla.advideos.Entities.Global;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
