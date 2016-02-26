@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">AdVideos</string>
+    <string name="default_selected_setting">N/A</string>
+    <string name="jwplayer">JW Player</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+    <string name="test_str">Testing!</string>
+    <string name="large_autoplay_mute">Large Autoplay Mute 1280x720</string>
+    <string name="small_click_to_start_unmuted">Small Click-to-Start Unmuted 300x169</string>
+    <string name="submit">Submit</string>
+    <string name="reset">Reset</string>
+    <string name="selected">Selected: </string>
+    <string name="width">Width: </string>
+    <string name="height">Height: </string>
+    <string name="default_width">640</string>
+    <string name="default_height">360</string>
+    <string name="autostart">Autostart:</string>
+    <string name="controls">Controls:</string>
+    <string name="file">File</string>
+    <string name="url">URL</string>
+    <string name="mute">Mute:</string>
+    <string name="repeat">Repeat:</string>
+    <string name="primary">Primary:</string>
+</resources>
