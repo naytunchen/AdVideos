@@ -22,6 +22,9 @@ public class MainActivity extends AppCompatActivity{
     private static Setting setting;
     private ViewPager viewPager;
     private PagerAdapter adapter;
+    private int index = 0;
+
+    private String[] tab_list = {"NAY","KG","LAR","LOE","MAY","NAY","TAL","!"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +35,8 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Configuration"));
-        tabLayout.addTab(tabLayout.newTab().setText("Video Player"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.configuration_title));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.video_player_title));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         viewPager = (ViewPager)findViewById(R.id.pager);
@@ -89,7 +92,8 @@ public class MainActivity extends AppCompatActivity{
                 (VideoFragment)adapter.instantiateItem(viewPager, position);
         Log.e(TAG, v_fragment.toString());
         View view = v_fragment.getView();
-        ((TextView)view.findViewById(R.id.test_text)).setText("NAY KG LAR LOE");
+        ((TextView)view.findViewById(R.id.test_text)).setText(index + ": " + tab_list[index=index%8]);
+        index++;
     }
 
 }

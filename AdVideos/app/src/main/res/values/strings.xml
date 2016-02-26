@@ -23,4 +23,6 @@
     <string name="repeat">Repeat:</string>
     <string name="primary">Primary:</string>
     <string name="aspect_ratio">Aspect Ratio</string>
+    <string name="configuration_title">Configuration</string>
+    <string name="video_player_title">Video Player</string>
 </resources>
