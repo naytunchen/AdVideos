@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import com.bnmla.advideos.R;
 
 /**
- * Created by nay on 2/26/16.
+ * Created by nay on 2/29/16.
  */
-public class PageFragment extends Fragment{
+public class VideoDescriptionFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.page_tab_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_video_description, container, false);
     }
 }

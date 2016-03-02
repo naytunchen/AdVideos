@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/video_fragment"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    tools:context=".MainActivity$VideoFragment"
+    android:id="@+id/videoOverlay">
 
-    <TextView
-        android:id="@+id/test_text"
-        android:text="HELLO"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <VideoView
-        android:id="@+id/videoView"
-        android:layout_gravity="center"
+    <RelativeLayout
+        android:id="@+id/videoPlayerWithAdPlayback"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="30dp"/>
+        android:layout_height="match_parent">
+
+        <com.bnmla.advideos.VideoPlayer.MyVideoPlayer
+            android:id="@+id/videoPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            />
+
+        <FrameLayout
+            android:id="@+id/adUiContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:id="@+id/playButton"
+            android:src="@drawable/ic_action_play_over_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/play"
+            android:background="@null"/>
+
+    </RelativeLayout>
 
 </LinearLayout>

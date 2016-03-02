@@ -8,4 +8,5 @@
     <dimen name="height_720">720dp</dimen>
     <dimen name="width_300">300dp</dimen>
     <dimen name="height_169">169dp</dimen>
+    <dimen name="font_size">16dp</dimen>
 </resources>

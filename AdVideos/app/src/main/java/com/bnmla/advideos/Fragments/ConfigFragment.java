@@ -22,6 +22,7 @@ import com.bnmla.advideos.MainActivity;
 import com.bnmla.advideos.R;
 import com.bnmla.advideos.Utilities.DataParser;
 import com.bnmla.advideos.Utilities.NetworkUtils;
+import com.bnmla.advideos.VideoPlayer.VideoPlayerController;
 
 /**
  * Created by nay on 2/26/16.
@@ -47,7 +48,7 @@ public class ConfigFragment extends Fragment implements AdapterView.OnItemSelect
     Spinner spinner, autostart_spinner, controls_spinner, primary_spinner, mute_spinner,
             repeat_spinner;
     TextView selected_tv;
-    EditText width_text, height_text, aspect_ratio_text;
+    EditText width_text, height_text, aspect_ratio_text, url_text;
     boolean network_status = false;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +70,7 @@ public class ConfigFragment extends Fragment implements AdapterView.OnItemSelect
         width_text = (EditText)view.findViewById(R.id.width_edittext);
         height_text = (EditText)view.findViewById(R.id.height_edittext);
         aspect_ratio_text = (EditText)view.findViewById(R.id.asepectratio_edittext);
+        url_text = (EditText) view.findViewById(R.id.current_url);
 
         // Creating adapter for Commons Setting dropdown list
         commons_adapter = new ArrayAdapter<String>(getContext(),
@@ -120,7 +122,9 @@ public class ConfigFragment extends Fragment implements AdapterView.OnItemSelect
             case R.id.submit_btn:
                 if(Global.DEBUG_MODE)
                     Log.d(TAG, "Submit Button Clicked.");
-                submitSetting();
+                if (MainActivity.getmVideoPlayer() != null) {
+                    submitSetting();
+                }
                 break;
             default:
                 Log.e(TAG, "OnClick: This case shouldn't occur.");
@@ -232,10 +236,28 @@ public class ConfigFragment extends Fragment implements AdapterView.OnItemSelect
             spinner.setSelection(0);
             primary_adapter = (ArrayAdapter)primary_spinner.getAdapter();
             primary_spinner.setSelection(primary_adapter.getPosition(HTML5));
+            resetVideoPlayer();
         }
 
         if(Global.DEBUG_MODE)
             Log.d(TAG, "defaultSetting Method finished.");
+    }
+
+    public void resetVideoPlayer() {
+        if(MainActivity.getmVideoPlayer() != null) {
+            MainActivity.setResetPressed(true);
+            stopVideoContent();
+        }
+        url_text.setText(R.string.ad_tag_url);
+        MainActivity.setCurrentContent(getString(R.string.ad_tag_url));
+        MainActivity.setmVideoPlayerController(
+                new VideoPlayerController(MainActivity.getApp_context(),
+                        MainActivity.getmVideoPlayer(), MainActivity.getmAdUIContainer()));
+    }
+
+    public void stopVideoContent() {
+        MainActivity.getmVideoPlayerController().stop();
+        MainActivity.getmPlayButton().setVisibility(View.VISIBLE);
     }
 
     private void submitSetting() {
@@ -269,5 +291,22 @@ public class ConfigFragment extends Fragment implements AdapterView.OnItemSelect
 
         Setting setting = new Setting(width,height,autostart,mute,controls,repeat,primary);
         MainActivity.setSetting(setting);
+
+        String ad_url = url_text.getText().toString();
+
+        if (ad_url == null || ad_url.isEmpty()) {
+            // if URL edit text is empty, do nothing
+            Toast.makeText(MainActivity.getApp_context(), "Please enter a valid URL",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            // if URL edit is entered, then update Video Content
+            stopVideoContent();
+            MainActivity.setCurrentContent(ad_url);
+            MainActivity.setmVideoPlayerController(new VideoPlayerController(
+                    MainActivity.getApp_context(), MainActivity.getmVideoPlayer(),
+                    MainActivity.getmAdUIContainer(), MainActivity.getCurrentContent()));
+        }
+
+        MainActivity.setResetPressed(false);
     }
 }
