@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -18,11 +19,16 @@ import com.bnmla.advideos.Adapters.PagerAdapter;
 import com.bnmla.advideos.Entities.Global;
 import com.bnmla.advideos.Entities.Setting;
 import com.bnmla.advideos.Fragments.VideoFragment;
+import com.bnmla.advideos.Utilities.VPAIDResponse;
 import com.bnmla.advideos.VideoPlayer.VideoPlayer;
 import com.bnmla.advideos.VideoPlayer.VideoPlayerController;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class MainActivity extends AppCompatActivity{
 
+    public static Queue<VPAIDResponse> pool = new LinkedList<>();
     final String TAG = MainActivity.class.getSimpleName();
     private static Setting setting;
     private ViewPager viewPager;
@@ -36,6 +42,7 @@ public class MainActivity extends AppCompatActivity{
     private static ImageButton mPlayButton;
     private static Context app_context = null;
     private static TabLayout tab_layout;
+    private static WebView web_view = null;
 
     private static String current_content_url = null;
     private static boolean resetPressed = false;
@@ -62,7 +69,7 @@ public class MainActivity extends AppCompatActivity{
                 tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        app_context = this;
+        app_context = getApplicationContext();
 
         tab_layout = (TabLayout) findViewById(R.id.tab_layout);
 
@@ -121,6 +128,14 @@ public class MainActivity extends AppCompatActivity{
         this.mVideoPlayer = (VideoPlayer) view.findViewById(R.id.videoPlayer);
         this.mAdUIContainer = ((ViewGroup) view.findViewById(R.id.videoPlayerWithAdPlayback));
         this.mPlayButton = ((ImageButton) view.findViewById(R.id.playButton));
+
+        /*VPAIDResponse vpaid_response = pool.poll();
+
+        if (vpaid_response != null) {
+            // if queue isn't empty, then webview stuffs!
+            MainActivity.setWebView(loadInterstitial(vpaid_response, view));
+            MainActivity.getWebView().setVisibility(View.VISIBLE);
+        }*/
 
         if(content_url == null && first_launched) {
             setmVideoPlayerController(new VideoPlayerController(this, mVideoPlayer, mAdUIContainer));
@@ -225,4 +240,102 @@ public class MainActivity extends AppCompatActivity{
         return first_launched;
     }
 
+//    public static void setWebView(WebView view) {
+//        MainActivity.web_view = view;
+//    }
+//
+//    public static WebView getWebView() {
+//        return web_view;
+//    }
+//
+//    @TargetApi(Build.VERSION_CODES.KITKAT)
+//    private WebView loadInterstitial(final VPAIDResponse vpaid_response, View view) {
+//        WebView wv = ((WebView) view.findViewById(R.id.interstitial));
+//
+//        // Setup WebView with a javascript interface
+//        WebView.setWebContentsDebuggingEnabled(true);
+//
+//        wv.getSettings().setJavaScriptEnabled(true);
+//        wv.getSettings().setMediaPlaybackRequiresUserGesture(false);
+//
+//        // load VPAID JS interface.
+//        wv.addJavascriptInterface(new VpaidAdInterface(MainActivity.getApp_context(),
+//                vpaid_response), "NativeInterface");;
+//
+//        // load the AdBroker with the given media source parsed from the VAST response
+//        wv.loadDataWithBaseURL(
+//                "http://search.spotxchange.com",
+//                String.format(getString(R.string.htmlAdBrokerScript), vpaid_response.medialUrl),
+//                "text/html",
+//                "utf8",
+//                null
+//        );
+//
+//        Toast.makeText(MainActivity.getApp_context(), "Constructing VPAID ad...",
+//                Toast.LENGTH_SHORT).show();
+//        return wv;
+//    }
+//
+//    @TargetApi(Build.VERSION_CODES.KITKAT)
+//    private void showInterstitial() {
+//        // Show the ad if it's ready. Otherwise toast and reload the ad.
+//        if(web_view != null) {
+//            web_view.evaluateJavascript(getString(R.string.jsStartAd), null);
+//            web_view.setVisibility(View.VISIBLE);
+//        } else {
+//            Toast.makeText(MainActivity.getApp_context(), "Ad did not load.",
+//                    Toast.LENGTH_SHORT).show();
+//        }
+//    }
+//
+//    /**
+//     * Evaluates the Javascript inside the VPAID WebView
+//     */
+//    @TargetApi(Build.VERSION_CODES.KITKAT)
+//    private void evaluateJavascript(final String javascript) {
+//       web_view.evaluateJavascript(javascript, null);
+//    }
+//
+//    private class VpaidAdInterface {
+//        Context context;
+//        VPAIDResponse response;
+//
+//        VpaidAdInterface(Context context, VPAIDResponse vpaid_response) {
+//            this.context = context;
+//            this.response = vpaid_response;
+//        }
+//
+//        @TargetApi(Build.VERSION_CODES.KITKAT)
+//        @JavascriptInterface
+//        public void onPageLoaded() {
+//            // load the environment variables.
+//            evaluateJavascript(getString(R.string.jsEnvironment));
+//
+//            // load the JS ad parameters parsed from the VAST response.
+//            evaluateJavascript(String.format(getString(R.string.jsAdParameters),
+//                    response.adParameters));
+//
+//            // load the getVPAIDAd JS.
+//            evaluateJavascript(getString(R.string.jsGetVPAIDAd));
+//        }
+//
+//        @TargetApi(Build.VERSION_CODES.KITKAT)
+//        @JavascriptInterface
+//        public void onGetVpaidAd() {
+//            evaluateJavascript(getString(R.string.jsInitAd));
+//        }
+//
+//        @TargetApi(Build.VERSION_CODES.KITKAT)
+//        @JavascriptInterface
+//        public void onAdLoaded() {
+//            showInterstitial();
+//            Toast.makeText(MainActivity.getApp_context(), "Ad loaded.", Toast.LENGTH_SHORT).show();
+//        }
+//
+//        @TargetApi(Build.VERSION_CODES.KITKAT)
+//        @JavascriptInterface
+//        public void onAdStarted() {
+//            Toast.makeText(MainActivity.getApp_context(), "Ad started.", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 }

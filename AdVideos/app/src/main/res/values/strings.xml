@@ -26,7 +26,7 @@
     <string name="configuration_title">Configuration</string>
     <string name="video_player_title">Video Player</string>
     <string name="video_description">Video Description</string>
-    <string name="current_url">URL: </string>
+    <string name="vast_url">VAST URL: </string>
     <string name="content_url">
         <![CDATA[http://rmcdn.2mdn.net/MotifFiles/html/1248596/android_1330378998288.mp4]]>
     </string>
@@ -35,6 +35,14 @@
     </string>
     <string name="test_url">
         <![CDATA[https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator=]]>
+    </string>
+    <string name="title_activity_video">VideoActivity</string>
+    <string name="player_config_settings">Player Configuration Settings: </string>
+    <string name="ad_config_settings">Advertising Configuration Settings: </string>
+    <string name="ad_source">Ad Source: </string>
+    <string name="vpaid_url">VPAID URL: </string>
+    <string name="vpaid_default_target">
+        <![CDATA[http://search.spotxchange.com/vast/2.00/85394?VPAID=js&app[domain]=com.spotxchange.vpaid]]>
     </string>
 </resources>
 
